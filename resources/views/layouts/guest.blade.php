@@ -36,7 +36,7 @@
                 </div>
 
                 <p class="mt-10 text-center text-xs text-slate-400 font-medium">
-                    &copy; {{ date('Y') }} EasyColoc. Tous comptes faits.
+                    &copy; 2026 EasyColoc. Tous comptes faits.
                 </p>
             </div>
         </div>
