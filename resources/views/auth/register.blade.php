@@ -7,12 +7,21 @@
     <form method="POST" action="{{ route('register') }}" class="mt-10 space-y-5">
         @csrf
 
-        <div>
-            <label for="name" class="block text-sm font-bold text-slate-700 mb-1">Nom complet</label>
-            <input id="name" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" 
-                class="block w-full px-4 py-3.5 bg-white border border-slate-200 text-slate-900 text-sm rounded-2xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition shadow-sm"
-                placeholder="Ex: Alex Martin">
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label for="firstname" class="block text-sm font-bold text-slate-700 mb-1">Prénom</label>
+                <input id="firstname" type="text" name="firstname" :value="old('firstname')" required autofocus autocomplete="given-name" 
+                    class="block w-full px-4 py-3.5 bg-white border border-slate-200 text-slate-900 text-sm rounded-2xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition shadow-sm"
+                    placeholder="Ex: Alex">
+                <x-input-error :messages="$errors->get('firstname')" class="mt-2" />
+            </div>
+            <div>
+                <label for="lastname" class="block text-sm font-bold text-slate-700 mb-1">Nom</label>
+                <input id="lastname" type="text" name="lastname" :value="old('lastname')" required autocomplete="family-name" 
+                    class="block w-full px-4 py-3.5 bg-white border border-slate-200 text-slate-900 text-sm rounded-2xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition shadow-sm"
+                    placeholder="Ex: Martin">
+                <x-input-error :messages="$errors->get('lastname')" class="mt-2" />
+            </div>
         </div>
 
         <div>

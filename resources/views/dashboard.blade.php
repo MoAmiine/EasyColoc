@@ -5,110 +5,85 @@
 
     <div class="space-y-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="p-3 bg-indigo-50 text-indigo-600 rounded-2xl">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </div>
-                    <span class="text-sm font-bold text-slate-500 uppercase tracking-wider">Total ce mois</span>
+            <div class="bg-white p-6 rounded-[2rem] border border-slate-50 shadow-sm flex items-center gap-5">
+                <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                 </div>
-                <div class="flex items-baseline gap-2">
-                    <span class="text-3xl font-black text-slate-900">1 240,50</span>
-                    <span class="text-lg font-bold text-slate-400">€</span>
-                </div>
-            </div>
-
-            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm italic">
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="p-3 bg-emerald-50 text-emerald-600 rounded-2xl">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </div>
-                    <span class="text-sm font-bold text-slate-500 uppercase tracking-wider">Mon Solde</span>
-                </div>
-                <div class="flex items-baseline gap-2">
-                    <span class="text-3xl font-black text-emerald-600">+ 42,00</span>
-                    <span class="text-lg font-bold text-emerald-400">€</span>
+                <div>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Solde Total</p>
+                    <p class="text-2xl font-black text-slate-900">145.50 €</p>
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="p-3 bg-amber-50 text-amber-600 rounded-2xl">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z" /></svg>
-                    </div>
-                    <span class="text-sm font-bold text-slate-500 uppercase tracking-wider">Réputation</span>
+            <div class="bg-white p-6 rounded-[2rem] border border-slate-50 shadow-sm flex items-center gap-5">
+                <div class="w-14 h-14 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
                 </div>
-                <div class="flex items-baseline gap-2">
-                    <span class="text-3xl font-black text-slate-900">+{{ Auth::user()->reputation ?? 0 }}</span>
-                    <span class="text-sm font-bold text-amber-500">Score</span>
+                <div>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Mes Dépenses</p>
+                    <p class="text-2xl font-black text-slate-900">62.00 €</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 p-6 rounded-[2rem] shadow-lg shadow-slate-200 flex items-center gap-5">
+                <div class="w-14 h-14 bg-white/10 text-amber-400 rounded-2xl flex items-center justify-center">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Score Réputation</p>
+                    <p class="text-2xl font-black text-white">+{{ Auth::user()->reputation ?? 0 }}</p>
                 </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-2 space-y-6">
-                <div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
-                    <div class="p-6 border-b border-slate-50 flex justify-between items-center">
-                        <h3 class="font-bold text-lg text-slate-800">Membres de la colocation</h3>
-                        <button class="text-indigo-600 text-sm font-bold hover:underline">Inviter +</button>
+        <div class="bg-white rounded-[2.5rem] border border-slate-50 shadow-sm overflow-hidden">
+            <div class="p-8 border-b border-slate-50 flex justify-between items-center">
+                <h3 class="text-xl font-black text-slate-900 italic tracking-tight">Activité Récente</h3>
+                <button class="text-xs font-bold text-indigo-600 hover:underline uppercase tracking-widest">Voir tout</button>
+            </div>
+            
+            <div class="p-4">
+                <div class="flex items-center justify-between p-4 hover:bg-slate-50 rounded-[1.5rem] transition-colors group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center font-bold">
+                            🛒
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-slate-900">Courses hebdomadaires</p>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">Coloc : La Villa des Amis • Hier</p>
+                        </div>
                     </div>
-                    <div class="divide-y divide-slate-50">
-                        <div class="p-6 flex items-center justify-between hover:bg-slate-50 transition">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center font-bold text-slate-600">JD</div>
-                                <div>
-                                    <p class="font-bold text-slate-900">Jean Dupont</p>
-                                    <span class="text-xs font-medium px-2 py-0.5 bg-indigo-100 text-indigo-700 rounded-full uppercase">Owner</span>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-sm font-bold text-rose-500">Doit 120,00 €</p>
-                                <p class="text-xs text-slate-400">Réputation: +5</p>
-                            </div>
-                        </div>
+                    <div class="text-right">
+                        <p class="text-sm font-black text-slate-900">- 42.00 €</p>
+                        <p class="text-[10px] font-bold text-rose-500 uppercase tracking-widest">En attente</p>
+                    </div>
+                </div>
 
-                        <div class="p-6 flex items-center justify-between hover:bg-slate-50 transition">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center font-bold text-white italic">SM</div>
-                                <div>
-                                    <p class="font-bold text-slate-900">Sarah Martin</p>
-                                    <span class="text-xs font-medium px-2 py-0.5 bg-slate-100 text-slate-600 rounded-full uppercase">Member</span>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-sm font-bold text-emerald-500">À recevoir 78,00 €</p>
-                                <p class="text-xs text-slate-400">Réputation: +12</p>
-                            </div>
+                <div class="flex items-center justify-between p-4 hover:bg-slate-50 rounded-[1.5rem] transition-colors group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center font-bold">
+                            💰
                         </div>
+                        <div>
+                            <p class="text-sm font-bold text-slate-900">Remboursement Sarah</p>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">Virement reçu • Il y a 2 jours</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm font-black text-emerald-600">+ 15.00 €</p>
+                        <p class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">Confirmé</p>
                     </div>
                 </div>
             </div>
 
-            <div class="space-y-6">
-                <div class="bg-indigo-600 p-8 rounded-[2.5rem] text-white shadow-xl shadow-indigo-100 relative overflow-hidden group">
-                    <div class="relative z-10">
-                        <h3 class="text-xl font-bold mb-2">Une dépense ?</h3>
-                        <p class="text-indigo-100 text-sm mb-6 opacity-80">Ajoutez-la maintenant pour mettre à jour les soldes automatiquement.</p>
-                        <a href="#" class="block w-full py-4 bg-white text-indigo-600 text-center rounded-2xl font-black shadow-lg hover:bg-indigo-50 transition transform group-hover:scale-[1.02]">
-                            + Ajouter une dépense
-                        </a>
-                    </div>
-                    <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-2xl transition group-hover:bg-white/20"></div>
-                </div>
-
-                <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                    <h4 class="font-bold text-slate-900 mb-4">À savoir</h4>
-                    <div class="space-y-4">
-                        <div class="flex gap-3 items-start">
-                            <div class="w-2 h-2 mt-1.5 rounded-full bg-amber-400 flex-shrink-0"></div>
-                            <p class="text-xs text-slate-500">Un départ avec une dette entraîne une pénalité de réputation de <span class="font-bold text-slate-700">-1</span>.</p>
-                        </div>
-                        <div class="flex gap-3 items-start">
-                            <div class="w-2 h-2 mt-1.5 rounded-full bg-indigo-400 flex-shrink-0"></div>
-                            <p class="text-xs text-slate-500">Seul l'<strong>Owner</strong> peut supprimer ou retirer des membres de la colocation.</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="p-6 bg-slate-50/50 border-t border-slate-50 text-center">
+                <p class="text-xs text-slate-400 font-medium italic">Aucune autre activité à afficher pour le moment.</p>
             </div>
         </div>
     </div>
