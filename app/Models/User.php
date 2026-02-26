@@ -18,9 +18,11 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'firstname',
+        'lastname',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -54,5 +56,13 @@ class User extends Authenticatable
     public function depenses()
     {
         return $this->hasMany(Depense::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->is_admin === 1 || $this->is_admin === true;
+    }
+    public function owner(){
+        return $this->hasMany(Colocation::class);
     }
 }
