@@ -8,7 +8,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="bg-indigo-600 p-6 rounded-[2rem] text-white shadow-xl shadow-indigo-100">
                 <p class="text-[10px] font-black uppercase tracking-widest opacity-70 mb-1">Membres Actifs</p>
-                <p class="text-4xl font-black">{{ $colocation->users->count() }}</p>
+                <p class="text-4xl font-black">{{ $colocation->users->count() ?? 0}}</p>
             </div>
             <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm">
                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Solde Total</p>
@@ -34,7 +34,7 @@
                 @if(Auth::id() === $colocation->owner_id)
                 <div class="bg-rose-50 p-6 rounded-[2rem] border border-rose-100">
                     <h3 class="font-black text-rose-800 uppercase italic tracking-tighter mb-4">Zone Danger</h3>
-                    <form action="{{ route('collocation.destroy', $colocation) }}" method="POST">
+                    <form action="#" method="POST">
                         @csrf @method('DELETE')
                         <button type="submit" class="w-full text-center px-6 py-3 bg-rose-600 text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-rose-700 transition-colors">
                             Supprimer la colocation
