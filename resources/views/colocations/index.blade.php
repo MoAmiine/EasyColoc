@@ -44,7 +44,7 @@
                         <div class="relative z-10">
                             <div class="flex justify-between items-start mb-6">
                                 <div class="w-14 h-14 bg-indigo-600 text-white rounded-2xl flex items-center justify-center font-black text-xl italic shadow-lg shadow-indigo-100">
-                                    {{ substr($coloc->name, 0, 1) }}
+                                    {{ strtoupper(substr($coloc->name, 0, 1)) }}
                                 </div>
                                 <div class="flex flex-col items-end">
                                     <span class="px-3 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase rounded-lg tracking-tighter">
