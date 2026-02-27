@@ -46,13 +46,15 @@ class ColocationController extends Controller
             ->with('success', "Espace '{$collocation->name}' créé avec succès !");
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+
+    
+        public function show(Colocation $colocation)
     {
-        //
+        $colocation->load('users');
+        
+        return view('colocations.show', compact('colocation'));
     }
+    
 
     /**
      * Show the form for editing the specified resource.
