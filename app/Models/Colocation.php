@@ -8,10 +8,11 @@ class Colocation extends Model
 {
     protected $fillable = ['name', 'owner_id', 'description', 'status'];
 
-    public function membres()
+    public function users()
     {
         return $this->belongsToMany(User::class, 'memberships')
-            ->withPivot('role', 'joined_at', 'left_at');
+            ->withPivot('role', 'joined_at', 'left_at')
+            ->withTimestamps();
     }
 
     public function depenses()
