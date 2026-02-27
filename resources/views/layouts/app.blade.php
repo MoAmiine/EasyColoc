@@ -101,7 +101,7 @@
             <div class="p-6 border-t border-slate-50 bg-slate-50/30">
                 <div class="flex items-center gap-3 mb-4 px-1">
                     <div class="w-10 h-10 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-bold text-sm italic shadow-md">
-                        {{ substr(Auth::user()->firstname, 0, 1) }}{{ substr(Auth::user()->lastname, 0, 1) }}
+                        {{ strtoupper(substr(Auth::user()->firstname, 0, 1) . substr(Auth::user()->lastname, 0, 1)) }}
                     </div>
                     <div class="overflow-hidden">
                         <p class="text-[11px] font-black text-slate-900 truncate uppercase tracking-tighter">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</p>
