@@ -129,17 +129,14 @@
             
             <header class="h-24 flex items-center justify-between px-12">
                 <div>
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-1">Nexus / Dashboard</p>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-1">EasyColoc / Dashboard</p>
                     <h1 class="text-xl font-black text-slate-800 italic uppercase tracking-wider">
                         {{ $header ?? 'Vue Principale' }}
                     </h1>
                 </div>
                 
                 <div class="flex items-center gap-6">
-                    <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-2xl border border-indigo-50 shadow-sm">
-                        <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
-                        <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Connecté</span>
-                    </div>
+
                 </div>
             </header>
 
