@@ -32,6 +32,9 @@ Route::middleware('auth')->group( function(){
     Route::get('/colocations', [ColocationController::class, 'index'])->name('colocation.index');       
     Route::get('/colocations/create', [ColocationController::class, 'create'])->name('colocation.create');
     Route::post('/colocations/store', [ColocationController::class, 'store'])->name('colocation.store');
+    Route::get('/colocations/details/{colocation}', [ColocationController::class, 'show'])->name('colocation.show');  
 });
+
+
 
 require __DIR__.'/auth.php';
