@@ -77,7 +77,7 @@
                            class="px-6 py-3 bg-white border border-indigo-200 text-indigo-600 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-indigo-50 transition-all">
                            Modifier
                         </a>
-                        <form action="#" method="POST" onsubmit="return confirm('Supprimer cette colocation ? Action irréversible.');">
+                        <form action="{{ route('colocation.delete', $colocation) }}" method="POST" onsubmit="return confirm('Supprimer cette colocation ?');">
                             @csrf @method('DELETE')
                             <button type="submit" class="px-6 py-3 bg-rose-50 text-rose-600 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-rose-100 transition-all">
                                 Supprimer
