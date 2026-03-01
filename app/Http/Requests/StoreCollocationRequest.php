@@ -12,7 +12,7 @@ class StoreCollocationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::check();
+        return true;
     }
 
     /**
@@ -28,7 +28,7 @@ class StoreCollocationRequest extends FormRequest
                 'string', 
                 'min:3', 
                 'max:50', 
-                'unique:collocations,name' // Optionnel: éviter deux colocs avec le même nom
+                'unique:collocations,name'
             ],
             'description' => [
                 'nullable', 
