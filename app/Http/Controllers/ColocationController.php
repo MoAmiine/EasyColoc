@@ -8,26 +8,17 @@ use Illuminate\Support\Str;
 
 class ColocationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $colocations = Auth::user()->colocations()->get();
         return view('colocations.index', compact('colocations'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('colocations.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $collocation = Colocation::create([
@@ -37,7 +28,7 @@ class ColocationController extends Controller
             'owner_id' => Auth::id(),
         ]);
 
-        $collocation->membres()->attach(Auth::id(), [
+        $collocation->users()->attach(Auth::id(), [
             'role' => 'owner',
             'joined_at' => now(),
         ]);
@@ -50,32 +41,31 @@ class ColocationController extends Controller
     
         public function show(Colocation $colocation)
     {
-        
+        $colocation->load('users');
         return view('colocations.show', compact('colocation'));
     }
     
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Colocation $collocation)
     {
-        //
+        return view('colocations.edit', compact('collocation'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Colocation $collocation)
     {
-        //
+
+        $collocation->update([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+        return redirect()->route('colocation.show', $collocation)->with('success', value: "Colocation modifie avec succès !");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Colocation $colocation)
     {
-        //
+        $colocation->delete($colocation);
+        return redirect()->route('colocation.index');
     }
+
+    
 }
