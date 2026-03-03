@@ -1,53 +1,97 @@
 <x-guest-layout>
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <div class="text-center lg:text-left">
-        <h2 class="text-3xl font-black text-slate-900 tracking-tight">Connexion</h2>
-        <p class="mt-2 text-slate-500 font-medium">Gérez les dépenses de votre colocation en un clic.</p>
-    </div>
-
-    <form method="POST" action="{{ route('login') }}" class="mt-10 space-y-6">
-        @csrf
-
-        <div>
-            <label for="email" class="block text-sm font-bold text-slate-700 mb-2">Adresse Email</label>
-            <input id="email" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" 
-                class="block w-full px-4 py-3.5 bg-white border border-slate-200 text-slate-900 text-sm rounded-2xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition shadow-sm"
-                placeholder="nom@exemple.com">
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+    <x-slot name="title">Connexion - EasyColoc</x-slot>
+    
+    <div class="space-y-6">
+        {{-- Header --}}
+        <div class="text-center lg:text-left">
+            <h1 class="text-3xl font-black text-slate-900 mb-2">Bon retour ! 👋</h1>
+            <p class="text-slate-500">Connectez-vous pour accéder à votre colocation.</p>
         </div>
 
-        <div>
-            <div class="flex items-center justify-between mb-2">
-                <label for="password" class="block text-sm font-bold text-slate-700">Mot de passe</label>
-                @if (Route::has('password.request'))
-                    <a class="text-xs font-bold text-indigo-600 hover:text-indigo-500" href="{{ route('password.request') }}">
-                        Oublié ?
-                    </a>
-                @endif
+        {{-- Session Status --}}
+        @if(session('status'))
+            <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 p-4 rounded-xl text-sm font-semibold">
+                {{ session('status') }}
             </div>
-            <input id="password" type="password" name="password" required autocomplete="current-password"
-                class="block w-full px-4 py-3.5 bg-white border border-slate-200 text-slate-900 text-sm rounded-2xl focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition shadow-sm"
-                placeholder="••••••••">
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+        @endif
 
-        <div class="flex items-center">
-            <input id="remember_me" type="checkbox" name="remember" class="rounded-md border-slate-300 text-indigo-600 shadow-sm focus:ring-indigo-500">
-            <label for="remember_me" class="ml-2 text-sm font-medium text-slate-600 italic">Se souvenir de moi</label>
-        </div>
+        {{-- Formulaire --}}
+        <form method="POST" action="{{ route('login') }}" class="space-y-5">
+            @csrf
 
-        <div>
-            <button type="submit" class="w-full flex justify-center py-4 px-4 border border-transparent rounded-2xl shadow-lg shadow-indigo-200 text-sm font-extrabold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none transition-all transform hover:-translate-y-0.5">
+            {{-- Email --}}
+            <div>
+                <label for="email" class="block text-sm font-bold text-slate-700 mb-2">Adresse email</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+                        </svg>
+                    </div>
+                    <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus 
+                        class="input-field w-full pl-12 pr-4 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-indigo-500 focus:bg-white text-slate-900 font-semibold placeholder:font-normal placeholder:text-slate-400"
+                        placeholder="vous@exemple.com">
+                </div>
+                @error('email')
+                    <p class="mt-2 text-sm text-rose-600 font-semibold">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- Password --}}
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <label for="password" class="text-sm font-bold text-slate-700">Mot de passe</label>
+                    @if(Route::has('password.request'))
+                        <a href="{{ route('password.request') }}" class="text-sm text-indigo-600 font-semibold link-hover">
+                            Oublié ?
+                        </a>
+                    @endif
+                </div>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                    </div>
+                    <input id="password" type="password" name="password" required 
+                        class="input-field w-full pl-12 pr-4 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl outline-none focus:border-indigo-500 focus:bg-white text-slate-900 font-semibold placeholder:font-normal placeholder:text-slate-400"
+                        placeholder="••••••••">
+                </div>
+                @error('password')
+                    <p class="mt-2 text-sm text-rose-600 font-semibold">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- Remember --}}
+            <div class="flex items-center">
+                <input id="remember" type="checkbox" name="remember" class="w-5 h-5 text-indigo-600 border-2 border-slate-200 rounded-lg focus:ring-indigo-500 cursor-pointer">
+                <label for="remember" class="ml-3 text-sm text-slate-600 font-medium cursor-pointer">
+                    Se souvenir de moi
+                </label>
+            </div>
+
+            {{-- Submit --}}
+            <button type="submit" class="btn-primary w-full py-4 rounded-2xl text-white font-bold text-lg shadow-lg shadow-indigo-200">
                 Se connecter
             </button>
+        </form>
+
+        {{-- Divider --}}
+        <div class="relative">
+            <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-slate-200"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+                <span class="px-4 bg-white text-slate-400 font-medium">ou</span>
+            </div>
         </div>
 
-        <div class="text-center mt-8">
-            <p class="text-sm text-slate-500">
-                Nouveau ici ? 
-                <a href="{{ route('register') }}" class="font-bold text-indigo-600 hover:text-indigo-500 transition">Créer un compte</a>
-            </p>
-        </div>
-    </form>
+        {{-- Register link --}}
+        <p class="text-center text-slate-600">
+            Pas encore de compte ? 
+            <a href="{{ route('register') }}" class="font-bold text-indigo-600 link-hover">
+                Créer une colocation
+            </a>
+        </p>
+    </div>
 </x-guest-layout>
