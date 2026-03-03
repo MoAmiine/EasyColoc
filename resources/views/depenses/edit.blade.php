@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        Nouvelle Dépense - {{ $colocation->name }}
+        Modifier Dépense - {{ $colocation->name }}
     </x-slot>
 
     <div class="max-w-2xl mx-auto">
@@ -13,12 +13,11 @@
                     </svg>
                 </a>
                 <div>
-                    <h2 class="text-2xl font-black text-slate-800 uppercase italic tracking-tight">Ajouter une dépense</h2>
-                    <p class="text-sm text-slate-400">{{ $colocation->name }}</p>
+                    <h2 class="text-2xl font-black text-slate-800 uppercase italic tracking-tight">Modifier la dépense</h2>
+                    <p class="text-sm text-slate-400">{{ $depense->title }}</p>
                 </div>
             </div>
 
-            {{-- Erreurs de validation --}}
             @if($errors->any())
                 <div class="bg-rose-50 border border-rose-200 text-rose-700 p-4 rounded-2xl mb-6">
                     <ul class="text-sm font-bold space-y-1">
@@ -29,16 +28,16 @@
                 </div>
             @endif
 
-            <form action="{{ route('depenses.store', $colocation) }}" method="POST" class="space-y-6">
+            <form action="{{ route('depenses.update', [$colocation, $depense]) }}" method="POST" class="space-y-6">
                 @csrf
+                @method('PUT') {{-- Important pour la mise à jour --}}
 
                 {{-- Titre --}}
                 <div>
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-2">
                         Titre de la dépense *
                     </label>
-                    <input type="text" name="title" value="{{ old('title') }}" 
-                        placeholder="ex: Courses Carrefour, Loyer février..."
+                    <input type="text" name="title" value="{{ old('title', $depense->title) }}" 
                         class="w-full px-6 py-4 bg-[#F4F7FE] border-2 border-transparent focus:border-indigo-600 focus:bg-white rounded-[1.5rem] outline-none transition-all font-bold text-slate-700 placeholder:text-slate-300 shadow-sm"
                         required>
                 </div>
@@ -48,8 +47,7 @@
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-2">
                         Montant (€) *
                     </label>
-                    <input type="number" step="0.01" name="amount" value="{{ old('amount') }}" 
-                        placeholder="0.00"
+                    <input type="number" step="0.01" name="amount" value="{{ old('amount', $depense->amount) }}" 
                         class="w-full px-6 py-4 bg-[#F4F7FE] border-2 border-transparent focus:border-indigo-600 focus:bg-white rounded-[1.5rem] outline-none transition-all font-bold text-slate-700 placeholder:text-slate-300 shadow-sm"
                         required>
                 </div>
@@ -63,7 +61,7 @@
                         class="w-full px-6 py-4 bg-[#F4F7FE] border-2 border-transparent focus:border-indigo-600 focus:bg-white rounded-[1.5rem] outline-none transition-all font-bold text-slate-700 shadow-sm">
                         <option value="">-- Sans catégorie --</option>
                         @foreach($categories as $categorie)
-                            <option value="{{ $categorie->id }}" {{ old('category_id') == $categorie->id ? 'selected' : '' }}>
+                            <option value="{{ $categorie->id }}" {{ old('category_id', $depense->category_id) == $categorie->id ? 'selected' : '' }}>
                                 {{ $categorie->name }}
                             </option>
                         @endforeach
@@ -78,7 +76,7 @@
                     <select name="user_id" 
                         class="w-full px-6 py-4 bg-[#F4F7FE] border-2 border-transparent focus:border-indigo-600 focus:bg-white rounded-[1.5rem] outline-none transition-all font-bold text-slate-700 shadow-sm">
                         @foreach($members as $member)
-                            <option value="{{ $member->id }}" {{ Auth::id() == $member->id ? 'selected' : '' }}>
+                            <option value="{{ $member->id }}" {{ old('user_id', $depense->user_id) == $member->id ? 'selected' : '' }}>
                                 {{ $member->firstname }} {{ $member->lastname }}
                                 {{ $member->id == Auth::id() ? '(moi)' : '' }}
                             </option>
@@ -91,7 +89,7 @@
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-2">
                         Date *
                     </label>
-                    <input type="date" name="spent_at" value="{{ old('spent_at', date('Y-m-d')) }}" 
+                    <input type="date" name="spent_at" value="{{ old('spent_at', $depense->spent_at->format('Y-m-d')) }}" 
                         class="w-full px-6 py-4 bg-[#F4F7FE] border-2 border-transparent focus:border-indigo-600 focus:bg-white rounded-[1.5rem] outline-none transition-all font-bold text-slate-700 shadow-sm"
                         required>
                 </div>
@@ -104,7 +102,7 @@
                     </a>
                     <button type="submit" 
                         class="flex-[2] px-6 py-4 bg-indigo-600 text-white rounded-[1.5rem] text-sm font-black shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all transform hover:-translate-y-1 uppercase tracking-widest">
-                        Enregistrer la dépense
+                        Mettre à jour
                     </button>
                 </div>
             </form>
