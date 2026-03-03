@@ -26,4 +26,10 @@ class Invitation extends Model
             $invitation->expires_at = now()->addDays(7);
         });
     }
+
+        public function isValid(): bool
+    {
+        return $this->accepted_at === null 
+            && $this->expires_at->isFuture();
+    }
 }
