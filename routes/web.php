@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\HttpCache\Store;
 use App\Http\Controllers\DepensesController;
+use App\Http\Controllers\InvitationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,6 +46,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/colocations/{colocation}/depenses/{depense}/edit', [DepensesController::class, 'edit'])->name('depenses.edit');;
     Route::put('/colocations/{colocation}/depenses/{depense}', [DepensesController::class, 'update'])->name('depenses.update');;
     Route::delete('/colocations/{colocation}/depenses/{depense}', [DepensesController::class, 'destroy'])->name('depenses.destroy');
+});
+
+Route::middleware('auth')->group(function () {
+    
+    Route::post('/colocations/{colocation}/invitations', [InvitationController::class, 'store'])->name('invitations.store');
+    Route::get('/invitations/{token}/accept', [InvitationController::class, 'accept'])->name('invitations.accept');
+    Route::get('/invitations/{token}/decline', [InvitationController::class, 'decline'])->name('invitations.decline');
 });
 
 
