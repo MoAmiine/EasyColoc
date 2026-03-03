@@ -13,9 +13,6 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/dashboard', function () {
-    // if (Auth::user()->is_admin) {
-    //     return redirect()->route('admin.dashboard');
-    // }
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -29,8 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')->group( function(){
-    Route::get('/colocations', [ColocationController::class, 'index'])->name('colocation.index');       
+Route::middleware('auth')->group(function () {
+    Route::get('/colocations', [ColocationController::class, 'index'])->name('colocation.index');
     Route::get('/colocations/create', [ColocationController::class, 'create'])->name('colocation.create');
     Route::post('/colocations/store', [ColocationController::class, 'store'])->name('colocation.store');
     Route::get('/colocations/details/{colocation}', [ColocationController::class, 'show'])->name('colocation.show');
@@ -41,10 +38,14 @@ Route::middleware('auth')->group( function(){
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/depenses', [DepensesController::class, 'index'])->name('depenses.index');
-    Route::get('/depenses/create', [DepensesController::class, 'create'])->name('depenses.create');
-    Route::post('/depenses/store', [DepensesController::class, 'store'])->name('depenses.store');
+
+    Route::get('/colocations/{colocation}/depenses', [DepensesController::class, 'index'])->name('depenses.index');;
+    Route::get('/colocations/{colocation}/depenses/create', [DepensesController::class, 'create'])->name('depenses.create');;
+    Route::post('/colocations/{colocation}/depenses', [DepensesController::class, 'store'])->name('depenses.store');;
+    Route::get('/colocations/{colocation}/depenses/{depense}/edit', [DepensesController::class, 'edit'])->name('depenses.edit');;
+    Route::put('/colocations/{colocation}/depenses/{depense}', [DepensesController::class, 'update'])->name('depenses.update');;
+    Route::delete('/colocations/{colocation}/depenses/{depense}', [DepensesController::class, 'destroy'])->name('depenses.destroy');
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
