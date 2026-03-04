@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Colocation;
 use App\Models\Depense;
 use App\Models\Categorie;
+use App\Models\Paiement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,6 +23,48 @@ class DepensesController extends Controller
         $total = $depenses->sum('amount');
 
         return view('depenses.index', compact('colocation', 'depenses', 'total'));
+    }
+
+    // NOUVELLE MÉTHODE : Afficher le détail d'une dépense
+    public function show(Colocation $colocation, Depense $depense)
+    {
+        $this->checkMember($colocation);
+
+        // Vérifier que la dépense appartient à cette colocation
+        if ($depense->colocation_id !== $colocation->id) {
+            abort(404, 'Dépense non trouvée');
+        }
+
+        // Récupérer les membres actifs de la colocation
+        $members = $colocation->users()
+            ->whereNull('memberships.left_at')
+            ->get();
+
+        $membersCount = $members->count();
+        $sharePerPerson = $membersCount > 0 ? $depense->amount / $membersCount : 0;
+
+        // Préparer les données pour chaque membre
+        $membersData = $members->map(function ($member) use ($depense, $sharePerPerson) {
+            // Le créateur de la dépense est considéré comme "payé" (il a avancé l'argent)
+            $hasPaid = ($member->id === $depense->user_id) 
+                ? true 
+                : Paiement::where('debtor_id', $member->id)
+                    ->where('creditor_id', $depense->user_id)
+                    ->where('colocation_id', $depense->colocation_id)
+                    ->where('is_paid', true)
+                    ->exists();
+
+            return [
+                'user' => $member,
+                'hasPaid' => $hasPaid,
+                'owes' => $hasPaid ? 0 : $sharePerPerson,
+                'shouldReceive' => ($member->id === $depense->user_id) 
+                    ? $sharePerPerson * ($membersCount - 1) 
+                    : 0,
+            ];
+        });
+
+        return view('depenses.show', compact('colocation', 'depense', 'membersData', 'sharePerPerson'));
     }
 
     public function create(Colocation $colocation)
@@ -126,7 +169,6 @@ class DepensesController extends Controller
             ->route('depenses.index', $colocation)
             ->with('success', 'Dépense supprimée avec succès !');
     }
-
 
     private function checkMember(Colocation $colocation): void
     {
