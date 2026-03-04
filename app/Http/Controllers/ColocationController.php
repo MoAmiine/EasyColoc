@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Colocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\Depense;
 
 class ColocationController extends Controller
 {
@@ -67,5 +68,44 @@ class ColocationController extends Controller
         return redirect()->route('colocation.index');
     }
 
+        private function checkMember(Colocation $colocation): void
+    {
+        $isMember = $colocation->users()
+            ->where('user_id', Auth::id())
+            ->whereNull('memberships.left_at')
+            ->exists();
+
+        if (!$isMember) {
+            abort(403, 'Vous n\'êtes pas membre de cette colocation');
+        }
+    }
+
+
+public function showDepenseDetail(Colocation $colocation, Depense $depense)
+{
+    $this->checkMember($colocation);
     
+    if ($depense->colocation_id !== $colocation->id) {
+        abort(404);
+    }
+    
+    $members = $colocation->users()
+        ->whereNull('memberships.left_at')
+        ->get();
+    
+    $totalMembers = $members->count();
+    
+    $sharePerPerson = $totalMembers > 0 ? $depense->amount / $totalMembers : 0;
+    
+    $membersData = $members->map(function ($member) use ($depense, $sharePerPerson, $totalMembers) {
+        return [
+            'user' => $member,
+            'hasPaid' => $depense->user_id === $member->id,
+            'owes' => $depense->user_id === $member->id ? 0 : $sharePerPerson,
+            'shouldReceive' => $depense->user_id === $member->id ? $sharePerPerson * ($totalMembers - 1) : 0,
+        ];
+    });
+    
+    return view('depenses.show', compact('colocation', 'depense', 'membersData', 'sharePerPerson', 'totalMembers'));
+}    
 }
