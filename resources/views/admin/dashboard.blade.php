@@ -1,66 +1,64 @@
-<x-admin-layout>
-    <x-slot name="header">
-        Panneau d'administration
-    </x-slot>
+<x-app-layout>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        
+        <h1 class="text-3xl font-black text-slate-900 uppercase italic mb-10">Nexus Control <span class="text-indigo-600">Admin</span></h1>
 
-    <div class="space-y-8">
-        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-            <h2 class="text-2xl font-bold text-slate-900 mb-6">Bienvenue Admin {{ Auth::user()->firstname }}</h2>
-            <p class="text-slate-600">Vous êtes connecté avec des droits d'administrateur.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
             <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="p-3 bg-indigo-50 text-indigo-600 rounded-2xl">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-2a6 6 0 0112 0v2z" /></svg>
-                    </div>
-                    <span class="text-sm font-bold text-slate-500 uppercase tracking-wider">Total Utilisateurs</span>
-                </div>
-                <div class="text-3xl font-black text-slate-900">--</div>
+                <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Utilisateurs</p>
+                <p class="text-3xl font-black italic text-slate-900">{{ $stats['total_users'] }}</p>
             </div>
-
             <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="p-3 bg-rose-50 text-rose-600 rounded-2xl">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-                    </div>
-                    <span class="text-sm font-bold text-slate-500 uppercase tracking-wider">Utilisateurs Bannis</span>
-                </div>
-                <div class="text-3xl font-black text-slate-900">--</div>
+                <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Colocations</p>
+                <p class="text-3xl font-black italic text-slate-900">{{ $stats['total_colocations'] }}</p>
             </div>
-
             <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="p-3 bg-emerald-50 text-emerald-600 rounded-2xl">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5.5m0 0H9m0 0H3.5m0 0H1" /></svg>
-                    </div>
-                    <span class="text-sm font-bold text-slate-500 uppercase tracking-wider">Colocations</span>
-                </div>
-                <div class="text-3xl font-black text-slate-900">--</div>
+                <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Flux Total</p>
+                <p class="text-3xl font-black italic text-indigo-600">{{ number_format($stats['total_spent'], 2) }} €</p>
+            </div>
+            <div class="bg-red-50 p-6 rounded-3xl border border-red-100 shadow-sm">
+                <p class="text-red-400 text-[10px] font-black uppercase tracking-widest">Bannis</p>
+                <p class="text-3xl font-black italic text-red-600">{{ $stats['banned_users'] }}</p>
             </div>
         </div>
 
-        <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
-            <h3 class="text-lg font-bold text-slate-900 mb-6">Gestion</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <a href="#" class="p-6 border border-slate-200 rounded-2xl hover:border-indigo-300 hover:bg-indigo-50 transition">
-                    <p class="font-bold text-slate-900 mb-2">Gérer les utilisateurs</p>
-                    <p class="text-sm text-slate-600">Voir et gérer tous les utilisateurs</p>
-                </a>
-                <a href="#" class="p-6 border border-slate-200 rounded-2xl hover:border-rose-300 hover:bg-rose-50 transition">
-                    <p class="font-bold text-slate-900 mb-2">Utilisateurs bannis</p>
-                    <p class="text-sm text-slate-600">Gérer les utilisateurs bannis</p>
-                </a>
-                <a href="#" class="p-6 border border-slate-200 rounded-2xl hover:border-emerald-300 hover:bg-emerald-50 transition">
-                    <p class="font-bold text-slate-900 mb-2">Colocations</p>
-                    <p class="text-sm text-slate-600">Gérer les colocations</p>
-                </a>
-                <a href="#" class="p-6 border border-slate-200 rounded-2xl hover:border-amber-300 hover:bg-amber-50 transition">
-                    <p class="font-bold text-slate-900 mb-2">Paramètres</p>
-                    <p class="text-sm text-slate-600">Paramètres de l'application</p>
-                </a>
+        <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-50 border-b border-slate-100">
+                        <th class="px-8 py-5 text-[10px] font-black uppercase text-slate-400">Utilisateur</th>
+                        <th class="px-8 py-5 text-[10px] font-black uppercase text-slate-400">Email</th>
+                        <th class="px-8 py-5 text-[10px] font-black uppercase text-slate-400">Réputation</th>
+                        <th class="px-8 py-5 text-[10px] font-black uppercase text-slate-400 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-50">
+                    @foreach($users as $user)
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="px-8 py-5">
+                                <span class="font-bold text-slate-900">{{ $user->firstname }} {{ $user->lastname }}</span>
+                                @if($user->is_admin) <span class="ml-2 text-[9px] bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full font-black uppercase">Staff</span> @endif
+                            </td>
+                            <td class="px-8 py-5 text-slate-500 text-sm font-medium">{{ $user->email }}</td>
+                            <td class="px-8 py-5">
+                                <span class="font-black italic text-slate-700">{{ $user->reputation_score }} pts</span>
+                            </td>
+                            <td class="px-8 py-5 text-right">
+                                <form action="{{ route('admin.users.ban', $user) }}" method="POST" class="inline">
+                                    @csrf
+                                    <button type="submit" class="text-[10px] font-black uppercase tracking-widest {{ $user->is_banned ? 'text-emerald-500' : 'text-red-500' }}">
+                                        {{ $user->is_banned ? 'Débannir' : 'Bannir' }}
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div class="p-6">
+                {{ $users->links() }}
             </div>
         </div>
+
     </div>
-</x-admin-layout>
+</x-app-layout>
