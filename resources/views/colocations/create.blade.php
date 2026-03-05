@@ -23,7 +23,7 @@
                 </label>
                 <input type="text" name="name" id="name" 
                     placeholder="ex: La Villa des Amis, Appartement 42..." 
-                    class="w-full px-6 py-4 bg-[#F4F7FE] border-2 border-transparent focus:border-indigo-600 focus:bg-white rounded-[1.5rem] outline-none transition-all font-bold text-slate-700 placeholder:text-slate-300 shadow-sm"
+                    class="w-full px-6 py-4 bg-[
                     required>
                 @error('name')
                     <p class="mt-2 text-rose-500 text-xs font-bold ml-4">{{ $message }}</p>
@@ -36,7 +36,7 @@
                 </label>
                 <textarea name="description" id="description" rows="3"
                     placeholder="Une courte description de votre colocation..." 
-                    class="w-full px-6 py-4 bg-[#F4F7FE] border-2 border-transparent focus:border-indigo-600 focus:bg-white rounded-[1.5rem] outline-none transition-all font-bold text-slate-700 placeholder:text-slate-300 shadow-sm"></textarea>
+                    class="w-full px-6 py-4 bg-[
             </div>
 
             <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-2xl flex gap-3 items-start">
@@ -49,7 +49,7 @@
             </div>
 
             <div class="flex items-center gap-4 pt-4">
-                <a href="#" 
+                <a href="{{ route('colocation.index') }}" 
                     class="flex-1 text-center px-6 py-4 rounded-[1.5rem] text-sm font-black text-slate-400 hover:bg-slate-50 transition-colors uppercase tracking-widest">
                     Annuler
                 </a>

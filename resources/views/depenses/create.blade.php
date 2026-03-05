@@ -7,7 +7,7 @@
         <div class="bg-white p-8 rounded-[2.5rem] border border-slate-50 shadow-sm">
             
             <div class="flex items-center gap-4 mb-8">
-                <a href="{{ route('depenses.index', $colocation) }}" class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-600 hover:bg-slate-200 transition">
+                <a href="{{ route('colocation.show', $colocation) }}" class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-600 hover:bg-slate-200 transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
@@ -98,7 +98,7 @@
 
                 {{-- Boutons --}}
                 <div class="flex items-center gap-4 pt-4">
-                    <a href="{{ route('depenses.index', $colocation) }}" 
+                    <a href="{{ route('colocation.show', $colocation) }}" 
                         class="flex-1 text-center px-6 py-4 rounded-[1.5rem] text-sm font-black text-slate-400 hover:bg-slate-50 transition-colors uppercase tracking-widest">
                         Annuler
                     </a>
