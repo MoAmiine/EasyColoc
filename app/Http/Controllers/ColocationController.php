@@ -9,11 +9,17 @@ use App\Models\Depense;
 
 class ColocationController extends Controller
 {
-    public function index()
-    {
-        $colocations = Auth::user()->colocations()->get();
-        return view('colocations.index', compact('colocations'));
-    }
+public function index()
+{
+    $user = Auth::user();
+
+    $colocations = $user->colocations()
+        ->wherePivot('left_at', null) 
+        ->withCount('users')
+        ->get();
+
+    return view('colocations.index', compact('colocations'));
+}
 
     public function create()
     {
@@ -108,4 +114,21 @@ public function showDepenseDetail(Colocation $colocation, Depense $depense)
     
     return view('depenses.show', compact('colocation', 'depense', 'membersData', 'sharePerPerson', 'totalMembers'));
 }    
+
+    public function quitter(Colocation $colocation)
+{
+    $user = Auth::user();
+
+    if ($user->aToutPayeDans($colocation)) {
+        $user->increment('reputation_score');
+    } else {
+        $user->decrement('reputation_score');
+    }
+
+    $user->colocations()->updateExistingPivot($colocation->id, [
+        'left_at' => now()
+    ]);
+
+    return redirect()->route('colocation.index');
+}
 }
