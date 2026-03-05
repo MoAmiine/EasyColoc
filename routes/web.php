@@ -8,18 +8,18 @@ use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\HttpCache\Store;
 use App\Http\Controllers\DepensesController;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\PaiementController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminController;
+
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth', 'verified', IsAdmin::class])->name('admin.dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -40,20 +40,34 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/colocations/{colocation}/depenses', [DepensesController::class, 'index'])->name('depenses.index');;
-    Route::get('/colocations/{colocation}/depenses/create', [DepensesController::class, 'create'])->name('depenses.create');;
-    Route::post('/colocations/{colocation}/depenses', [DepensesController::class, 'store'])->name('depenses.store');;
-    Route::get('/colocations/{colocation}/depenses/{depense}/edit', [DepensesController::class, 'edit'])->name('depenses.edit');;
-    Route::put('/colocations/{colocation}/depenses/{depense}', [DepensesController::class, 'update'])->name('depenses.update');;
+    Route::get('/colocations/{colocation}/depenses/create', [DepensesController::class, 'create'])->name('depenses.create');
+    Route::get('/colocations/{colocation}/depenses/create', [DepensesController::class, 'create'])->name('depenses.create');
+    Route::post('/colocations/{colocation}/depenses', [DepensesController::class, 'store'])->name('depenses.store');
+    Route::get('/colocations/{colocation}/depenses/{depense}/edit', [DepensesController::class, 'edit'])->name('depenses.edit');
+    Route::put('/colocations/{colocation}/depenses/{depense}', [DepensesController::class, 'update'])->name('depenses.update');
     Route::delete('/colocations/{colocation}/depenses/{depense}', [DepensesController::class, 'destroy'])->name('depenses.destroy');
-});
+    Route::get('/colocations/{colocation}/depenses/{depense}', [ColocationController::class, 'showDepenseDetail'])->name('depenses.show');
+    Route::get('/colocations/{colocation}/depenses/{depense}', [DepensesController::class, 'show'])->name('depenses.show'); 
+    Route::post('/colocation/{colocation}/quitter', [ColocationController::class, 'quitter'])->name('colocation.quitter');
+
+    });
 
 Route::middleware('auth')->group(function () {
     
-    Route::post('/colocations/{colocation}/invitations', [InvitationController::class, 'store'])->name('invitations.store');
-    Route::get('/invitations/{token}/accept', [InvitationController::class, 'accept'])->name('invitations.accept');
-    Route::get('/invitations/{token}/decline', [InvitationController::class, 'decline'])->name('invitations.decline');
+Route::post('/colocations/{colocation}/invitations', [InvitationController::class, 'store'])->name('invitations.store');
+Route::get('/invitations/{token}/accept', [InvitationController::class, 'accept'])->name('invitations.accept');
+Route::get('/invitations/{token}/decline', [InvitationController::class, 'decline'])->name('invitations.decline');
 });
 
+Route::post('/colocations/{colocation}/depenses/{depense}/payer', [PaiementController::class, 'payer'])
+    ->name('paiements.payer')
+    ->middleware('auth');
 
+
+
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('/admin/stats', [AdminController::class, 'index'])->name('admin.index');
+    Route::post('/admin/users/{user}/toggle-ban', [AdminController::class, 'toggleBan'])->name('admin.users.ban');
+});
 require __DIR__ . '/auth.php';
