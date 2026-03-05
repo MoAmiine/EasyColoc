@@ -11,31 +11,15 @@ use Illuminate\Support\Facades\Auth;
 
 class DepensesController extends Controller
 {
-    public function index(Colocation $colocation)
-    {
-        $this->checkMember($colocation);
 
-        $depenses = $colocation->depenses()
-            ->with(['user', 'categorie'])
-            ->latest()
-            ->get();
-
-        $total = $depenses->sum('amount');
-
-        return view('depenses.index', compact('colocation', 'depenses', 'total'));
-    }
-
-    // NOUVELLE MÉTHODE : Afficher le détail d'une dépense
     public function show(Colocation $colocation, Depense $depense)
     {
         $this->checkMember($colocation);
 
-        // Vérifier que la dépense appartient à cette colocation
         if ($depense->colocation_id !== $colocation->id) {
             abort(404, 'Dépense non trouvée');
         }
 
-        // Récupérer les membres actifs de la colocation
         $members = $colocation->users()
             ->whereNull('memberships.left_at')
             ->get();
@@ -43,9 +27,7 @@ class DepensesController extends Controller
         $membersCount = $members->count();
         $sharePerPerson = $membersCount > 0 ? $depense->amount / $membersCount : 0;
 
-        // Préparer les données pour chaque membre
-        $membersData = $members->map(function ($member) use ($depense, $sharePerPerson) {
-            // Le créateur de la dépense est considéré comme "payé" (il a avancé l'argent)
+        $membersData = $members->map(function ($member) use ($depense, $membersCount, $sharePerPerson) {
             $hasPaid = ($member->id === $depense->user_id) 
                 ? true 
                 : Paiement::where('debtor_id', $member->id)
@@ -59,7 +41,7 @@ class DepensesController extends Controller
                 'hasPaid' => $hasPaid,
                 'owes' => $hasPaid ? 0 : $sharePerPerson,
                 'shouldReceive' => ($member->id === $depense->user_id) 
-                    ? $sharePerPerson * ($membersCount - 1) 
+                    ? $sharePerPerson * ($membersCount - 1)
                     : 0,
             ];
         });
@@ -102,7 +84,7 @@ class DepensesController extends Controller
         Depense::create($validated);
 
         return redirect()
-            ->route('depenses.index', $colocation)
+            ->route('colocation.show', $colocation)
             ->with('success', 'Dépense ajoutée avec succès !');
     }
 
@@ -147,7 +129,7 @@ class DepensesController extends Controller
         $depense->update($validated);
 
         return redirect()
-            ->route('depenses.index', $colocation)
+            ->route('colocation.show', $colocation)
             ->with('success', 'Dépense mise à jour avec succès !');
     }
 
@@ -166,7 +148,7 @@ class DepensesController extends Controller
         $depense->delete();
 
         return redirect()
-            ->route('depenses.index', $colocation)
+            ->route('colocation.show', $colocation)
             ->with('success', 'Dépense supprimée avec succès !');
     }
 
