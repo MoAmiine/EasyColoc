@@ -7,10 +7,10 @@
 
     <title>{{ config('app.name', 'EasyColoc') }}</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https:
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https:
 
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -24,20 +24,20 @@
             font-size: 0.875rem;
             font-weight: 600;
             transition: all 0.2s ease;
-            color: #64748b;
+            color:
             text-decoration: none;
             margin-bottom: 0.25rem;
         }
         
         .nav-link:hover {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg,
             color: white;
             transform: translateX(4px);
             box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
         
         .nav-link.active {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg,
             color: white;
             box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
@@ -49,7 +49,7 @@
         }
         
         .gradient-text {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg,
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -60,10 +60,8 @@
 
     <div class="flex min-h-screen">
         
-        {{-- Sidebar --}}
         <aside class="w-72 bg-white border-r border-slate-200 flex flex-col fixed inset-y-0 z-50 shadow-xl shadow-slate-200/50">
             
-            {{-- Logo --}}
             <div class="p-8 pb-6">
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-3 group">
                     <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-indigo-200 group-hover:scale-105 transition-transform duration-300">
@@ -78,11 +76,9 @@
                 </a>
             </div>
 
-            {{-- Navigation principale --}}
             <nav class="flex-1 px-4 py-4">
                 <p class="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em] px-4 mb-3">Menu principal</p>
                 
-                {{-- Dashboard --}}
                 <a href="{{ route('dashboard') }}" 
                    class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -91,7 +87,6 @@
                     <span>Dashboard</span>
                 </a>
 
-                {{-- Colocations --}}
                 <a href="{{ route('colocation.index') }}" 
                    class="nav-link {{ request()->routeIs('colocation.*') || request()->routeIs('depenses.*') ? 'active' : '' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -108,12 +103,11 @@
                     @endif
                 </a>
 
-                {{-- Admin (visible uniquement pour admin) --}}
                 @if(Auth::user()->is_admin)
                     <div class="mt-6 pt-6 border-t border-slate-100">
                         <p class="text-[10px] font-black text-rose-300 uppercase tracking-[0.2em] px-4 mb-3">Administration</p>
                         
-                        <a href="{{ route('admin.dashboard') }}" 
+                        <a href="{{ route('admin.index') }}" 
                            class="nav-link {{ request()->routeIs('admin.*') ? 'active' : '' }} !text-rose-600 hover:!text-white">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
@@ -125,7 +119,6 @@
                 @endif
             </nav>
 
-            {{-- Profil utilisateur --}}
             <div class="p-4 border-t border-slate-100">
                 <a href="{{ route('profile.edit') }}" 
                    class="flex items-center gap-3 p-3 rounded-2xl hover:bg-slate-50 transition-colors group {{ request()->routeIs('profile.*') ? 'bg-indigo-50' : '' }}">
@@ -141,7 +134,6 @@
                     </svg>
                 </a>
 
-                {{-- Déconnexion --}}
                 <form method="POST" action="{{ route('logout') }}" class="mt-2">
                     @csrf
                     <button type="submit" 
@@ -155,10 +147,8 @@
             </div>
         </aside>
 
-        {{-- Contenu principal --}}
         <div class="flex-1 flex flex-col ml-72">
             
-            {{-- Header --}}
             <header class="h-20 flex items-center justify-between px-8 bg-white/50 backdrop-blur-sm sticky top-0 z-40 border-b border-slate-100">
                 <div>
                     <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-0.5">
@@ -169,19 +159,9 @@
                     </h1>
                 </div>
 
-                {{-- Actions rapides --}}
-                <div class="flex items-center gap-3">
-                    <a href="{{ route('colocation.create') }}" 
-                       class="flex items-center gap-2 px-4 py-2.5 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                        </svg>
-                        <span>Nouvelle Coloc</span>
-                    </a>
-                </div>
+                
             </header>
 
-            {{-- Main content --}}
             <main class="flex-1 p-8">
                 <div class="bg-white rounded-3xl border border-slate-100 shadow-sm shadow-slate-200/50 h-full min-h-[calc(100vh-160px)] p-8 overflow-y-auto">
                     {{ $slot }}

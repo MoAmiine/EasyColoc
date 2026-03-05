@@ -2,24 +2,20 @@
     <x-slot name="title">Connexion - EasyColoc</x-slot>
     
     <div class="space-y-6">
-        {{-- Header --}}
         <div class="text-center lg:text-left">
             <h1 class="text-3xl font-black text-slate-900 mb-2">Bon retour ! 👋</h1>
             <p class="text-slate-500">Connectez-vous pour accéder à votre colocation.</p>
         </div>
 
-        {{-- Session Status --}}
         @if(session('status'))
             <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 p-4 rounded-xl text-sm font-semibold">
                 {{ session('status') }}
             </div>
         @endif
 
-        {{-- Formulaire --}}
         <form method="POST" action="{{ route('login') }}" class="space-y-5">
             @csrf
 
-            {{-- Email --}}
             <div>
                 <label for="email" class="block text-sm font-bold text-slate-700 mb-2">Adresse email</label>
                 <div class="relative">
@@ -37,7 +33,6 @@
                 @enderror
             </div>
 
-            {{-- Password --}}
             <div>
                 <div class="flex items-center justify-between mb-2">
                     <label for="password" class="text-sm font-bold text-slate-700">Mot de passe</label>
@@ -62,7 +57,6 @@
                 @enderror
             </div>
 
-            {{-- Remember --}}
             <div class="flex items-center">
                 <input id="remember" type="checkbox" name="remember" class="w-5 h-5 text-indigo-600 border-2 border-slate-200 rounded-lg focus:ring-indigo-500 cursor-pointer">
                 <label for="remember" class="ml-3 text-sm text-slate-600 font-medium cursor-pointer">
@@ -70,13 +64,11 @@
                 </label>
             </div>
 
-            {{-- Submit --}}
             <button type="submit" class="btn-primary w-full py-4 rounded-2xl text-white font-bold text-lg shadow-lg shadow-indigo-200">
                 Se connecter
             </button>
         </form>
 
-        {{-- Divider --}}
         <div class="relative">
             <div class="absolute inset-0 flex items-center">
                 <div class="w-full border-t border-slate-200"></div>
@@ -86,11 +78,10 @@
             </div>
         </div>
 
-        {{-- Register link --}}
         <p class="text-center text-slate-600">
             Pas encore de compte ? 
             <a href="{{ route('register') }}" class="font-bold text-indigo-600 link-hover">
-                Créer une colocation
+                Créer un compte
             </a>
         </p>
     </div>
