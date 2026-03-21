@@ -7,13 +7,18 @@
 
     <title>{{ config('app.name', 'EasyColoc') }}</title>
 
-    <link href="https:
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https:
+    
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+        }
         
         .nav-link {
             display: flex;
@@ -23,36 +28,52 @@
             border-radius: 1rem;
             font-size: 0.875rem;
             font-weight: 600;
-            transition: all 0.2s ease;
-            color:
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #64748b;
             text-decoration: none;
             margin-bottom: 0.25rem;
         }
         
         .nav-link:hover {
-            background: linear-gradient(135deg,
-            color: white;
-            transform: translateX(4px);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            color: white !important;
+            transform: translateX(6px);
+            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
         }
         
         .nav-link.active {
-            background: linear-gradient(135deg,
-            color: white;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            color: white !important;
+            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
         }
         
         .glass-card {
             background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
         
         .gradient-text {
-            background: linear-gradient(135deg,
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            display: inline-block;
+        }
+
+        /* Custom Scrollbar for the Dashboard */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #cbd5e1;
         }
     </style>
 </head>
@@ -76,7 +97,7 @@
                 </a>
             </div>
 
-            <nav class="flex-1 px-4 py-4">
+            <nav class="flex-1 px-4 py-4 overflow-y-auto">
                 <p class="text-[10px] font-black text-slate-300 uppercase tracking-[0.2em] px-4 mb-3">Menu principal</p>
                 
                 <a href="{{ route('dashboard') }}" 
@@ -113,32 +134,28 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                             </svg>
                             <span>Contrôle Admin</span>
-                            <span class="ml-auto bg-rose-100 text-rose-600 text-[10px] font-black px-2 py-0.5 rounded-full">ADMIN</span>
                         </a>
                     </div>
                 @endif
             </nav>
 
-            <div class="p-4 border-t border-slate-100">
+            <div class="p-4 border-t border-slate-100 bg-slate-50/50">
                 <a href="{{ route('profile.edit') }}" 
-                   class="flex items-center gap-3 p-3 rounded-2xl hover:bg-slate-50 transition-colors group {{ request()->routeIs('profile.*') ? 'bg-indigo-50' : '' }}">
-                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-slate-700 to-slate-900 text-white flex items-center justify-center font-bold text-sm shadow-md group-hover:scale-105 transition-transform">
+                   class="flex items-center gap-3 p-3 rounded-2xl hover:bg-white transition-all group {{ request()->routeIs('profile.*') ? 'bg-white shadow-sm' : '' }}">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-slate-700 to-slate-900 text-white flex items-center justify-center font-bold text-xs shadow-md group-hover:scale-105 transition-transform">
                         {{ strtoupper(substr(Auth::user()->firstname, 0, 1) . substr(Auth::user()->lastname, 0, 1)) }}
                     </div>
                     <div class="flex-1 min-w-0">
-                        <p class="font-bold text-slate-900 truncate text-sm">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</p>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest truncate">Mon Profil</p>
+                        <p class="font-bold text-slate-900 truncate text-xs">{{ Auth::user()->firstname }} {{ Auth::user()->lastname }}</p>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest truncate">Mon Profil</p>
                     </div>
-                    <svg class="w-5 h-5 text-slate-300 group-hover:text-indigo-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
                 </a>
 
                 <form method="POST" action="{{ route('logout') }}" class="mt-2">
                     @csrf
                     <button type="submit" 
-                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                         </svg>
                         <span>Déconnexion</span>
@@ -149,7 +166,7 @@
 
         <div class="flex-1 flex flex-col ml-72">
             
-            <header class="h-20 flex items-center justify-between px-8 bg-white/50 backdrop-blur-sm sticky top-0 z-40 border-b border-slate-100">
+            <header class="h-20 flex items-center justify-between px-8 bg-white/70 backdrop-blur-md sticky top-0 z-40 border-b border-slate-100">
                 <div>
                     <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-0.5">
                         {{ Auth::user()->is_admin ? 'Admin / ' : '' }}{{ $header ?? 'Dashboard' }}
@@ -158,13 +175,15 @@
                         {{ $header ?? 'Tableau de bord' }}
                     </h1>
                 </div>
-
-                
             </header>
 
             <main class="flex-1 p-8">
-                <div class="bg-white rounded-3xl border border-slate-100 shadow-sm shadow-slate-200/50 h-full min-h-[calc(100vh-160px)] p-8 overflow-y-auto">
-                    {{ $slot }}
+                <div class="bg-white rounded-3xl border border-slate-100 shadow-sm shadow-slate-200/50 min-h-[calc(100vh-160px)] p-8">
+                    @if(isset($slot))
+                        {{ $slot }}
+                    @else
+                        @yield('content')
+                    @endif
                 </div>
             </main>
         </div>
